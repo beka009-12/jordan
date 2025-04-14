@@ -1,11 +1,29 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import scss from "./HomePage.module.scss";
 import { SiJordan } from "react-icons/si";
 import { IoIosArrowBack } from "react-icons/io";
 import { IoIosArrowForward } from "react-icons/io";
 import { Button } from "@mui/material";
+import { useAppDispatch, useAppSelectore } from "../../store/Store";
+import axios from "axios";
+import { setData } from "../../store/slice/SliceData";
+
+const API = import.meta.env.VITE_ID;
 
 const HomePage: FC = () => {
+  const { data } = useAppSelectore((s) => s.data);
+  const dispatch = useAppDispatch();
+
+  const fetchData = async () => {
+    const { data } = await axios.get(API);
+    dispatch(setData(data.data));
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+  console.log(data);
+
   return (
     <>
       <section id={scss.HomePage}>
@@ -56,15 +74,14 @@ const HomePage: FC = () => {
               </div>
             </div>
             <div className={scss.box}>
-              <div className={scss.cart}>
-                <img
-                  src="https://wallpapers.com/images/hd/nike-air-max270-white-sneaker-1z2xvy8j3zhppmku.jpg"
-                  alt=""
-                />
-                <h3>Air Jordan 3</h3>
-                <span>Women's Shoes</span>
-                <p>$180</p>
-              </div>
+              {data.map((item, index) => (
+                <div key={index} className={scss.cart}>
+                  <img src={item.img} alt="" />
+                  <h3>{item.name}</h3>
+                  <span>{item.category}</span>
+                  <p>${item.price}</p>
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -73,30 +90,15 @@ const HomePage: FC = () => {
 
       <section id={scss.nike}>
         <div className="container">
-          <div className={scss.img}>
+          <div className={scss.cart}>
+            <div className={scss.text}>
+              <h1>Nike Air</h1>
+              <button>learn more</button>
+            </div>
             <img
-              src="https://classic.cdn.media.amplience.net/i/hibbett/D3523_4000_main"
+              src="https://media.about.nike.com/img/5593cfa7-39ca-407f-a2f2-4347be5c2d96/su24-peg41-volt-womens-hero-re.jpg?m=eyJlZGl0cyI6eyJqcGVnIjp7InF1YWxpdHkiOjEwMH0sIndlYnAiOnsicXVhbGl0eSI6MTAwfSwiZXh0cmFjdCI6eyJsZWZ0IjowLCJ0b3AiOjEyNSwid2lkdGgiOjMwMDAsImhlaWdodCI6MjAwMH0sInJlc2l6ZSI6eyJ3aWR0aCI6Mzg0MH19fQ%3D%3D&s=98d8ef78c7d709be8fdbaf2e71edfb07162c9090c13207bdd5766c3b5b0d263f"
               alt=""
             />
-            <div className={scss.global}>
-              <img
-                src="https://www.nikesb.com/assets/imager/uploads/67515/DH9227-100-PHCFH001_bd624c85e984eb4b3e5bbc5eb4b33f00.png"
-                alt=""
-              />
-              <img
-                src="https://media.gq.com/photos/675b31debbc84e8ce8c5b9a6/master/w_1600%2Cc_limit/air-jordan-1-retro-low-chicago-release-date%2520(1).png"
-                alt=""
-              />
-              <img
-                src="https://image.cnbcfm.com/api/v1/image/106832392-1611931738880-CW5883-100_237589929_D_R_1X1_original.png?v=1611939182&w=1600&h=900"
-                alt=""
-              />
-              <img
-                src="https://www.pngkey.com/png/full/58-583999_nike-orange-nike-swoosh-png.png"
-                alt=""
-              />
-              <h2>Nike is comfort, style and confidence in every move.</h2>
-            </div>
           </div>
         </div>
       </section>
