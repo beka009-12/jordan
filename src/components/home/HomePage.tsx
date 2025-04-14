@@ -5,22 +5,22 @@ import { IoIosArrowBack } from "react-icons/io";
 import { IoIosArrowForward } from "react-icons/io";
 import { Button } from "@mui/material";
 import { useAppDispatch, useAppSelectore } from "../../store/Store";
-import { setData } from "../../store/slice/SliceData";
 import axios from "axios";
+import { setData } from "../../store/slice/SliceData";
 
 const API = import.meta.env.VITE_ID;
 
 const HomePage: FC = () => {
-  const { data } = useAppSelectore((state) => state.data);
+  const { data } = useAppSelectore((s) => s.data);
   const dispatch = useAppDispatch();
 
-  const readProduct = async () => {
+  const fetchData = async () => {
     const { data } = await axios.get(API);
     dispatch(setData(data.data));
   };
 
   useEffect(() => {
-    readProduct();
+    fetchData();
   }, []);
   console.log(data);
 
@@ -88,7 +88,20 @@ const HomePage: FC = () => {
       </section>
       {/* ! */}
 
-      <section id={scss.nike}></section>
+      <section id={scss.nike}>
+        <div className="container">
+          <div className={scss.cart}>
+            <div className={scss.text}>
+              <h1>Nike Air</h1>
+              <button>learn more</button>
+            </div>
+            <img
+              src="https://media.about.nike.com/img/5593cfa7-39ca-407f-a2f2-4347be5c2d96/su24-peg41-volt-womens-hero-re.jpg?m=eyJlZGl0cyI6eyJqcGVnIjp7InF1YWxpdHkiOjEwMH0sIndlYnAiOnsicXVhbGl0eSI6MTAwfSwiZXh0cmFjdCI6eyJsZWZ0IjowLCJ0b3AiOjEyNSwid2lkdGgiOjMwMDAsImhlaWdodCI6MjAwMH0sInJlc2l6ZSI6eyJ3aWR0aCI6Mzg0MH19fQ%3D%3D&s=98d8ef78c7d709be8fdbaf2e71edfb07162c9090c13207bdd5766c3b5b0d263f"
+              alt=""
+            />
+          </div>
+        </div>
+      </section>
     </>
   );
 };

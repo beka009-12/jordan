@@ -11,10 +11,12 @@ interface IType {
 
 interface IData {
   data: IType[];
+  filter: string;
 }
 
 const initialState: IData = {
   data: [],
+  filter: "all",
 };
 
 const dataSlice = createSlice({
@@ -27,8 +29,11 @@ const dataSlice = createSlice({
     setAddData: (state, action: PayloadAction<IType>) => {
       state.data.push(action.payload);
     },
+    setFilter: (state, action: PayloadAction<string>) => {
+      state.filter = action.payload; // Обновление состояния фильтра
+    },
   },
 });
 
-export const { setData, setAddData } = dataSlice.actions;
+export const { setData, setAddData, setFilter } = dataSlice.actions;
 export default dataSlice.reducer;
