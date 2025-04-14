@@ -1,3 +1,4 @@
+import AdminPage from "../components/admin/AdminPage";
 import HomePage from "../components/home/HomePage";
 import Brands from "../components/pages/Brands";
 
@@ -32,8 +33,8 @@ export const link = [
     title: "Jordan",
   },
   {
-    link: "/Sport",
-    element: "",
-    title: "Sport",
+    link: "/Admin",
+    element: <AdminPage />,
+    title: "Admin",
   },
 ];
