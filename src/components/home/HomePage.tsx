@@ -8,21 +8,30 @@ import { useAppDispatch, useAppSelectore } from "../../store/Store";
 import axios from "axios";
 import { setData } from "../../store/slice/SliceData";
 import { useNavigate } from "react-router-dom";
-const API = import.meta.env.VITE_ID;
+
+
+ API = import.meta.env.VITE_ID;
 
 const HomePage: FC = () => {
   const { data } = useAppSelectore((s) => s.data);
   const dispatch = useAppDispatch();
+
   const navigate = useNavigate();
 
   const fetchData = async () => {
     let { data } = await axios.get(API);
+
+
+  const fetchData = async () => {
+    const { data } = await axios.get(API);
+
     dispatch(setData(data.data));
   };
 
   useEffect(() => {
     fetchData();
   }, []);
+
 
   const great = [
     {
@@ -41,6 +50,9 @@ const HomePage: FC = () => {
       title: "Nike KD 16",
     },
   ];
+
+  console.log(data);
+
 
   return (
     <>
@@ -108,6 +120,14 @@ const HomePage: FC = () => {
                   </div>
                 ))
               )}
+              {data.map((item, index) => (
+                <div key={index} className={scss.cart}>
+                  <img src={item.img} alt="" />
+                  <h3>{item.name}</h3>
+                  <span>{item.category}</span>
+                  <p>${item.price}</p>
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -144,6 +164,15 @@ const HomePage: FC = () => {
                 <button>Shop</button>
               </div>
             </div>
+          <div className={scss.cart}>
+            <div className={scss.text}>
+              <h1>Nike Air</h1>
+              <button>learn more</button>
+            </div>
+            <img
+              src="https://media.about.nike.com/img/5593cfa7-39ca-407f-a2f2-4347be5c2d96/su24-peg41-volt-womens-hero-re.jpg?m=eyJlZGl0cyI6eyJqcGVnIjp7InF1YWxpdHkiOjEwMH0sIndlYnAiOnsicXVhbGl0eSI6MTAwfSwiZXh0cmFjdCI6eyJsZWZ0IjowLCJ0b3AiOjEyNSwid2lkdGgiOjMwMDAsImhlaWdodCI6MjAwMH0sInJlc2l6ZSI6eyJ3aWR0aCI6Mzg0MH19fQ%3D%3D&s=98d8ef78c7d709be8fdbaf2e71edfb07162c9090c13207bdd5766c3b5b0d263f"
+              alt=""
+            />
           </div>
         </div>
       </section>

@@ -37,5 +37,8 @@ export const link = [
     link: "/Sport",
     element: <AdminPage />,
     title: "Sport",
+    link: "/Admin",
+    element: <AdminPage />,
+    title: "Admin",
   },
 ];
