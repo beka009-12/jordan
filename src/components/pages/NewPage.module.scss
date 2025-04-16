@@ -1,0 +1,54 @@
+.img {
+  background: url(https://static.nike.com/a/images/w_1920,c_limit,f_auto,q_auto/0e83da91-a429-48e4-8043-08b2bde93526/image.jpg)
+    no-repeat center;
+  background-size: 100%;
+  height: 100vh;
+}
+
+.scrollContainer {
+  overflow-x: auto;
+  padding: 20px 0;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+
+  &::-webkit-scrollbar {
+    height: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #a18cd1, #fbc2eb);
+    border-radius: 20px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: #f0f0f0;
+    border-radius: 20px;
+  }
+}
+
+.content {
+  display: flex;
+  gap: 20px;
+  min-width: max-content;
+}
+
+.card {
+  flex: 0 0 auto;
+  scroll-snap-align: center;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  background-color: #fff;
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+
+  img {
+    width: 250px;
+    height: 250px;
+    object-fit: cover;
+    display: block;
+  }
+}
