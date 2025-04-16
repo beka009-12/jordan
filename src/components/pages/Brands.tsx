@@ -1,111 +1,155 @@
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import scss from "./Brands.module.scss";
+import { useAppDispatch, useAppSelectore } from "../../store/Store";
+import axios from "axios";
+import { setData } from "../../store/slice/SliceData";
+import Pagination from "@mui/material/Pagination";
+
+const API = import.meta.env.VITE_ID;
+
+const categories = [
+  "Air Max Dn8",
+  "Air Max Dn",
+  "Air Max 1",
+  "Air Max 90",
+  "Air Max 95",
+  "Air Max 97",
+  "Air Max 270",
+  "Air Max Plus",
+  "Vapor Max",
+];
 
 const Brands: FC = () => {
+  const { data } = useAppSelectore((s) => s.data);
+  const dispatch = useAppDispatch();
+
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [page, setPage] = useState(1);
+  const itemsPerPage = 6;
+
+  const fetchData = async () => {
+    let { data } = await axios.get(API);
+    dispatch(setData(data.data));
+  };
+
+  const filteredData = selectedCategory
+    ? data.filter((item) => item.category === selectedCategory)
+    : data;
+
+  const count = Math.ceil(filteredData.length / itemsPerPage);
+  const handlePageData = () => {
+    const start = (page - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
+    return filteredData.slice(start, end);
+  };
+
+  const handlerPage = (event: React.ChangeEvent<unknown>, value: number) => {
+    setPage(value);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
-    <>
+    <div id={scss.aaaa}>
       <section id={scss.main}>
         <div className="container">
           <div className={scss.main}>
             <div className={scss.div}>
               <div className={scss.quantity}>
-                <h3>Shoues </h3>
+                <h3>Shoues</h3>
                 <p>/</p>
                 <h3>Air Max</h3>
                 <p>/</p>
                 <h3>Air Max Dn</h3>
               </div>
-              <h2>Air Max Dn (6)</h2>
+              <h2>Air Max Dn ({filteredData.length})</h2>
             </div>
-            <div className={scss.show}>
-              <h3>Show</h3>
-              <div className={scss.select}>
-                <select>
-                  <option>Sort</option>
-                  <option>Featured</option>
-                  <option>Newest</option>
-                  <option>Price:High-Low</option>
-                  <option>Price:Low - High</option>
-                </select>
+            <div className={scss.select}>
+              <div
+                className={scss.show}
+                style={{ cursor: "pointer" }}
+                onClick={() => setIsExpanded(!isExpanded)}
+              >
+                <h3>Show</h3>
               </div>
+              <select>
+                <option>Sort</option>
+                <option>Featured</option>
+                <option>Newest</option>
+                <option>Price:High-Low</option>
+                <option>Price:Low - High</option>
+              </select>
             </div>
           </div>
         </div>
       </section>
+
       <section className={scss.Brands}>
         <div className="container">
           <div className={scss.content}>
-            <div className={scss.text}>
-              <h2>Air Max Dn8</h2>
-              <h2>Air Max Dn</h2>
-              <h2>Air Max 1</h2>
-              <h2>Air Max 90</h2>
-              <h2>Air Max 95</h2>
-              <h2>Air Max 97</h2>
-              <h2>Air Max 270</h2>
-              <h2>Air Max Plus</h2>
-              <h2>Vapor Max</h2>
-            </div>
-            <div className={scss.box}>
-              <div className={scss.cart}>
-                <img
-                  src="https://wallpapers.com/images/hd/nike-air-max270-white-sneaker-1z2xvy8j3zhppmku.jpg"
-                  alt=""
-                />
-                <h3>Air Jordan 3</h3>
-                <span>Women's Shoes</span>
-                <p>$180</p>
+            {!isExpanded && (
+              <div className={scss.text}>
+                {categories.map((item, index) => (
+                  <h2
+                    key={index}
+                    onClick={() => {
+                      setSelectedCategory(item);
+                      setPage(1);
+                    }}
+                    style={{
+                      cursor: "pointer",
+                      color: selectedCategory === item ? "#007bff" : "inherit",
+                      textDecoration:
+                        selectedCategory === item ? "underline" : "none",
+                    }}
+                  >
+                    {item}
+                  </h2>
+                ))}
+                {selectedCategory && (
+                  <button
+                    onClick={() => setSelectedCategory(null)}
+                    style={{
+                      marginTop: "10px",
+                      cursor: "pointer",
+                      background: "#000",
+                      border: "none",
+                      padding: "5px 10px",
+                      borderRadius: "5px",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    Show All
+                  </button>
+                )}
               </div>
-              <div className={scss.cart}>
-                <img
-                  src="https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/60120284-9c6c-4eb8-aee8-b4179c20eb57/AIR+MAX+DN8.png"
-                  alt=""
+            )}
+
+            <div className={`${scss.box} ${isExpanded ? scss.expanded : ""}`}>
+              {handlePageData().map((item, index) => (
+                <div key={index} className={scss.cart}>
+                  <img src={item.img} alt={item.name} />
+                  <h3>{item.name}</h3>
+                  <span>{item.category}</span>
+                  <p>${item.price}</p>
+                </div>
+              ))}
+              <div className={scss.pagi}>
+                <Pagination
+                  color="primary"
+                  count={count}
+                  page={page}
+                  onChange={handlerPage}
                 />
-                <h3>Nike Air Max Dn8</h3>
-                <span>Women's Shoes</span>
-                <p>$245</p>
-              </div>{" "}
-              <div className={scss.cart}>
-                <img
-                  src="https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/da65bdd4-2934-47d8-8df1-1c1af2c2835f/W+AIR+MAX+DN8.png"
-                  alt=""
-                />
-                <h3>Nike Air Max Dn8</h3>
-                <span>Women's Shoes</span>
-                <p>$250</p>
-              </div>
-              <div className={scss.cart}>
-                <img
-                  src="https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/da65bdd4-2934-47d8-8df1-1c1af2c2835f/W+AIR+MAX+DN8.png"
-                  alt=""
-                />
-                <h3>Nike Air Max Dn8</h3>
-                <span>Women's Shoes</span>
-                <p>$250</p>
-              </div>
-              <div className={scss.cart}>
-                <img
-                  src="https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/da65bdd4-2934-47d8-8df1-1c1af2c2835f/W+AIR+MAX+DN8.png"
-                  alt=""
-                />
-                <h3>Nike Air Max Dn8</h3>
-                <span>Women's Shoes</span>
-                <p>$250</p>
-              </div>
-              <div className={scss.cart}>
-                <img
-                  src="https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/da65bdd4-2934-47d8-8df1-1c1af2c2835f/W+AIR+MAX+DN8.png"
-                  alt=""
-                />
-                <h3>Nike Air Max Dn8</h3>
-                <span>Women's Shoes</span>
-                <p>$250</p>
               </div>
             </div>
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
 };
 

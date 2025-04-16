@@ -7,6 +7,7 @@ interface IType {
   category: string;
   img: string;
   details: string;
+  air: string;
 }
 
 interface IData {

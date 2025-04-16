@@ -46,3 +46,7 @@ button {
     background-color: rgb(81, 81, 81);
   }
 }
+
+a.active {
+  color: blue;
+}

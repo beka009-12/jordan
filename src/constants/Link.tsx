@@ -1,5 +1,7 @@
+import AdminPage from "../components/admin/AdminPage";
 import HomePage from "../components/home/HomePage";
 import Brands from "../components/pages/Brands";
+import NewPage from "../components/pages/NewPage";
 
 export const link = [
   {
@@ -8,7 +10,7 @@ export const link = [
   },
   {
     link: "/New",
-    element: "",
+    element: <NewPage />,
     title: "New",
   },
   {
@@ -33,7 +35,7 @@ export const link = [
   },
   {
     link: "/Sport",
-    element: "",
+    element: <AdminPage />,
     title: "Sport",
   },
 ];

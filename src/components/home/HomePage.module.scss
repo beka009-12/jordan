@@ -97,7 +97,6 @@
         img {
           max-width: 450px;
           height: 450px;
-          padding: 30px;
           object-fit: contain;
           background-color: #f5f5f5;
           width: 100%;
@@ -117,70 +116,119 @@
     }
   }
 }
-
 #nike {
-  padding-block: 30px;
-  position: relative;
-  .img {
-    img {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto;
-      max-width: 700px;
-    }
-    .global {
-      img {
-        max-width: 400px;
-        height: 400px;
-        width: 100%;
-        object-fit: contain;
-        border-radius: 50%;
-        -webkit-border-radius: 50%;
-        -moz-border-radius: 50%;
-        -ms-border-radius: 50%;
-        -o-border-radius: 50%;
-        &:nth-child(1) {
-          position: absolute;
-          top: 30px;
-          right: 340px;
-          z-index: -1;
-          max-width: 600px;
-          transform: rotate(-25deg);
-        }
-        &:nth-child(2) {
-          position: absolute;
-          bottom: 0;
-          right: 100px;
-          object-fit: cover;
-          background-color: #f5f5f5;
-        }
-        &:nth-child(3) {
-          top: 0;
-          position: absolute;
-          object-fit: cover;
-          background-color: #f5f5f5;
-        }
-        &:nth-child(4) {
-          position: absolute;
-          top: 300px;
-          max-width: 700px;
-          z-index: -2;
-          border-radius: 10px;
-          object-fit: contain;
-          right: 400px;
-          -webkit-border-radius: 10px;
-          -moz-border-radius: 10px;
-          -ms-border-radius: 10px;
-          -o-border-radius: 10px;
+  padding-block: 50px;
+}
+.scrollWrapper {
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 10px;
+
+  &::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 4px;
+  }
+}
+
+.Img {
+  display: flex;
+  gap: 20px;
+  min-width: max-content;
+  scroll-snap-type: x mandatory;
+}
+
+.card {
+  // position: relative;
+  flex: 0 0 auto;
+  scroll-snap-align: center;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 1px 1px 10px;
+  background: #fff;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: scale(1.03);
+  }
+
+  img {
+    width: 450px;
+    height: 450px;
+    object-fit: contain;
+    // display: block;
+    border-radius: 16px;
+  }
+  h1 {
+    font-size: 25px;
+    padding: 0px 0 0 20px;
+  }
+}
+
+#reklama {
+  padding-block: 40px;
+  .reklama {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    .cart_reklama:nth-child(1) {
+      background: url(https://futurevvorld.com/wp-content/uploads/2022/10/nike-air-max-tw-tailwind-sneaker-recycled-materials-move-to-zero-3-1440x891.png)
+        no-repeat center;
+      background-size: 100%;
+      max-width: 620px;
+      width: 100%;
+      height: 350px;
+      position: relative;
+      .aaa {
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+        align-items: start;
+        padding: 20px;
+        gap: 10px;
+        bottom: 0;
+        h2 {
+          backdrop-filter: blur(40px);
+          padding: 2px 15px;
+          border-radius: 30px;
+          color: #fff;
+          font-size: 30px;
         }
       }
-      h2:nth-child(5) {
+    }
+    .cart_reklama:nth-child(2) {
+      background: url(https://media.gq.com/photos/61e9dd45c1d4b2988dc1f504/16:9/w_2560%2Cc_limit/cdg-97s.jpg)
+        no-repeat center;
+      position: relative;
+      background-size: 100%;
+      max-width: 620px;
+      width: 100%;
+      height: 350px;
+
+      .aaa {
         position: absolute;
-        bottom: 180px;
-        font-size: 45px;
-        max-width: 450px;
-        line-height: 55px;
+        display: flex;
+        // align-items: center;
+        flex-direction: column;
+        justify-content: start;
+        align-items: start;
+        padding: 20px;
+        gap: 10px;
+        bottom: 0;
+        h2 {
+          backdrop-filter: blur(40px);
+          padding: 2px 15px;
+          border-radius: 30px;
+          color: #fff;
+          font-size: 30px;
+        }
       }
     }
   }
